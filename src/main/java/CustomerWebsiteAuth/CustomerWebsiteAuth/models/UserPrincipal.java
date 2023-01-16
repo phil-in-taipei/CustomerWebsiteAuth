@@ -51,4 +51,15 @@ public class UserPrincipal {
         credentialsNonExpired = true;
         enabled = true;
     }
+
+    public UserPrincipal(String username, String password, List<Authority> authorities, Customer customer) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+        this.customer = customer;
+        accountNonExpired = true;
+        accountNonLocked = true;
+        credentialsNonExpired = true;
+        enabled = true;
+    }
 }

@@ -1,4 +1,5 @@
 package CustomerWebsiteAuth.CustomerWebsiteAuth.security;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -10,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity(debug = true)
+@AllArgsConstructor
 public class SecurityConfig {
 
     @Bean
@@ -29,7 +31,7 @@ public class SecurityConfig {
                         //make sure that all others requests require authentication.
                         .anyRequest().authenticated())
                 //use HttpBasic authentication for /update-user, withDefaults() allows you to chain the next method
-                .httpBasic(Customizer.withDefaults())
+                //.httpBasic(Customizer.withDefaults())
                 //use a form to log in with the default login page
                 .formLogin();
 
@@ -38,6 +40,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        System.out.println("Running password encoder");
+        return
+                new BCryptPasswordEncoder();
     }
 }
