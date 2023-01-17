@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -24,14 +25,11 @@ public class SecurityConfig {
                         //the following 4 paths should be allowed to all always. They are static and are required to present the pages properly.
                         .antMatchers("/js/**", "/css/**", "/img/**", "/webjars/**").permitAll()
                         //make sure that the admin page can only be accessed user with ROLE_ADMIN
-                        //.antMatchers("/admin").hasRole("ADMIN")
-                        //.antMatchers("/fantastic").hasRole("SUPERU")
-                        //only allow users with an UPDATER authority to update users.
-                        //.antMatchers("/update-user").hasAuthority("UPDATER")
-                        //make sure that all others requests require authentication.
+                        //.antMatchers("/").hasRole("USER"))
                         .anyRequest().authenticated())
+                        //.anyRequest().permitAll())
                 //use HttpBasic authentication for /update-user, withDefaults() allows you to chain the next method
-                //.httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
                 //use a form to log in with the default login page
                 .formLogin();
 
@@ -39,9 +37,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        System.out.println("Running password encoder");
+    public  PasswordEncoder passwordEncoder() { //BCryptPasswordEncoder
+        System.out.println("*************Running password encoder*************");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode("testpassword");
+        System.out.println(encodedPassword);
+        boolean decodedPassword = passwordEncoder.matches("testpassword", encodedPassword);
+        System.out.println("The password is decoded properly: " + decodedPassword);
         return
-                new BCryptPasswordEncoder();
+                new BCryptPasswordEncoder(5); //  SCryptPasswordEncoder();
     }
 }

@@ -74,15 +74,15 @@ public class CustomerWebsiteAuthApplication implements CommandLineRunner {
 				customerService.saveAllCustomer(Arrays.asList(customer1, customer2, customer3));
 				userPrincipalRepo.saveAll(
 						Arrays.asList(
-								new UserPrincipal("ADMIN", passwordEncoder.encode("admin"),
+								new UserPrincipal("admin", passwordEncoder.encode("admin"),
 										Arrays.asList(userAuth, adminAuth)),
-								new UserPrincipal("USER", passwordEncoder.encode("user"),
+								new UserPrincipal("user1", passwordEncoder.encode("testpassword"),
 										Collections.singletonList(userAuth),
 										customer1),
-								new UserPrincipal("USER2", passwordEncoder.encode("user"),
+								new UserPrincipal("user2", passwordEncoder.encode("testpassword"),
 										Collections.singletonList(userAuth),
 										customer2),
-								new UserPrincipal("USER3", passwordEncoder.encode("user"),
+								new UserPrincipal("user3", passwordEncoder.encode("testpassword"),
 										Collections.singletonList(userAuth),
 										customer3)
 						)
